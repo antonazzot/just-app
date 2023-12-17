@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgresql:
+    container_name: local-db-postgres
+    image: bitnami/postgresql
+    environment:
+      POSTGRES_DB: app-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/
+      - ./:/docker-entrypoint-initdb.d/
+    networks:
+      - app-db-network
+
+volumes:
+  app-db-data:
+    name: app-db-data
+
+networks:
+  app-db-network:
+    name: app-db-network
